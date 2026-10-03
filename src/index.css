@@ -89,3 +89,15 @@ body {
   0% { transform: translateY(0); }
   50% { transform: translateY(-2px); }
 }
+
+/* ควันกาแฟของน้องพิกเซล */
+.critter-steam {
+  animation: critter-steam 1.8s ease-in-out infinite;
+}
+.critter-steam-b {
+  animation-delay: -0.9s;
+}
+@keyframes critter-steam {
+  0%, 100% { opacity: 0.2; transform: translateY(2px); }
+  50% { opacity: 0.8; transform: translateY(-2px); }
+}
