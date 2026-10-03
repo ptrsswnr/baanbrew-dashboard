@@ -106,3 +106,108 @@ export function formatCurrency(value) {
 export function formatNumber(value) {
   return value.toLocaleString('th-TH')
 }
+
+/** จัดรูปแบบสัดส่วนเป็นเปอร์เซ็นต์ 1 ตำแหน่ง เช่น 0.1234 -> "12.3%" */
+export function formatPercent(value) {
+  return `${(value * 100).toFixed(1)}%`
+}
+
+/** แปลง customers.csv เป็นรายการโปรไฟล์ลูกค้า (1 แถว = 1 คน) */
+export function parseCustomersCsv(csvText) {
+  const { data } = Papa.parse(csvText, {
+    header: true,
+    skipEmptyLines: true,
+  })
+
+  return data.map((row) => ({
+    customerId: row.customer_id,
+    nickname: row.nickname,
+    gender: row.gender,
+    ageGroup: row.age_group,
+    homeBranch: row.home_branch,
+    joinedDate: row.joined_date,
+    hasPurchase: row.has_purchase === 'True',
+  }))
+}
+
+/** จำนวนสมาชิกทั้งหมด */
+export function getCustomerCount(customers) {
+  return customers.length
+}
+
+/** สัดส่วนสมาชิกที่เคยซื้อแล้วอย่างน้อย 1 ครั้ง (has_purchase = True) */
+export function getActivePurchaserShare(customers) {
+  if (customers.length === 0) return 0
+  const buyers = customers.filter((c) => c.hasPurchase).length
+  return buyers / customers.length
+}
+
+/** ลำดับช่วงอายุจากน้อยไปมาก ใช้จัดเรียงกราฟช่วงอายุให้อ่านเป็นสเกลอายุ ไม่ใช่เรียงตามจำนวน */
+const AGE_GROUP_ORDER = ['ต่ำกว่า 18', '18-24', '25-34', '35-44', '45-54', '55+']
+
+/** จำนวนสมาชิกแยกตามช่วงอายุ เรียงจากอายุน้อยไปมาก */
+export function getCustomersByAgeGroup(customers) {
+  const counts = new Map()
+  for (const c of customers) {
+    counts.set(c.ageGroup, (counts.get(c.ageGroup) || 0) + 1)
+  }
+  return AGE_GROUP_ORDER.filter((ageGroup) => counts.has(ageGroup)).map((ageGroup) => ({
+    ageGroup,
+    count: counts.get(ageGroup),
+  }))
+}
+
+/** จำนวนสมาชิกแยกตามเพศ */
+export function getCustomersByGender(customers) {
+  const counts = new Map()
+  for (const c of customers) {
+    counts.set(c.gender, (counts.get(c.gender) || 0) + 1)
+  }
+  return Array.from(counts, ([gender, count]) => ({ gender, count }))
+}
+
+/** จำนวนสมาชิกแยกตามสาขาที่สมัคร เรียงจากมากไปน้อย */
+export function getCustomersByBranch(customers) {
+  const counts = new Map()
+  for (const c of customers) {
+    counts.set(c.homeBranch, (counts.get(c.homeBranch) || 0) + 1)
+  }
+  return Array.from(counts, ([branch, count]) => ({ branch, count })).sort(
+    (a, b) => b.count - a.count,
+  )
+}
+
+/** จำนวนสมาชิกใหม่รายเดือน (YYYY-MM) ตามวันที่สมัคร เรียงจากเดือนเก่าไปใหม่ */
+export function getNewMembersByMonth(customers) {
+  const counts = new Map()
+  for (const c of customers) {
+    const month = c.joinedDate ? c.joinedDate.slice(0, 7) : ''
+    counts.set(month, (counts.get(month) || 0) + 1)
+  }
+  return Array.from(counts, ([month, count]) => ({ month, count })).sort((a, b) =>
+    a.month.localeCompare(b.month),
+  )
+}
+
+/** ลูกค้าที่ซื้อเยอะสุด topN อันดับ รวมยอดซื้อจาก sales rows เข้ากับโปรไฟล์ใน customers.csv */
+export function getTopCustomersBySpend(rows, customers, topN = 10) {
+  const customerById = new Map(customers.map((c) => [c.customerId, c]))
+  const spendByCustomer = new Map()
+  for (const row of rows) {
+    if (!row.customerId) continue
+    const entry = spendByCustomer.get(row.customerId) || { spend: 0, orderIds: new Set() }
+    entry.spend += row.amount
+    entry.orderIds.add(row.orderId)
+    spendByCustomer.set(row.customerId, entry)
+  }
+
+  return Array.from(spendByCustomer, ([customerId, entry]) => ({
+    customerId,
+    nickname: customerById.get(customerId)?.nickname || customerId,
+    homeBranch: customerById.get(customerId)?.homeBranch || '-',
+    spend: entry.spend,
+    orderCount: entry.orderIds.size,
+  }))
+    .sort((a, b) => b.spend - a.spend)
+    .slice(0, topN)
+}
