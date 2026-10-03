@@ -107,6 +107,13 @@ export function formatNumber(value) {
   return value.toLocaleString('th-TH')
 }
 
+/** จัดรูปแบบเงินบาทแบบย่อสำหรับแกนกราฟ เช่น ฿1.2 ล. หรือ ฿850k */
+export function formatShortCurrency(value) {
+  if (value >= 1_000_000) return `฿${(value / 1_000_000).toFixed(1)} ล.`
+  if (value >= 1_000) return `฿${(value / 1_000).toFixed(0)}k`
+  return `฿${Math.round(value)}`
+}
+
 /** จัดรูปแบบสัดส่วนเป็นเปอร์เซ็นต์ 1 ตำแหน่ง เช่น 0.1234 -> "12.3%" */
 export function formatPercent(value) {
   return `${(value * 100).toFixed(1)}%`
