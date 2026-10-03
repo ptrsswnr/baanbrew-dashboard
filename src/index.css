@@ -50,3 +50,42 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* น้องพิกเซล (Critter): สลับเฟรมขาตอนเดิน/ถูกลาก, ยืนนิ่งตอน idle */
+.critter .legs-a,
+.critter .legs-b {
+  display: none;
+}
+.critter-walk .legs-stand,
+.critter-drag .legs-stand {
+  display: none;
+}
+.critter-walk .legs-a,
+.critter-walk .legs-b,
+.critter-drag .legs-a,
+.critter-drag .legs-b {
+  display: inline;
+  animation: critter-step 0.4s steps(1) infinite;
+}
+.critter-walk .legs-b,
+.critter-drag .legs-b {
+  animation-delay: -0.2s;
+}
+.critter-drag .legs-a,
+.critter-drag .legs-b {
+  animation-duration: 0.2s;
+}
+.critter-drag .legs-b {
+  animation-delay: -0.1s;
+}
+.critter-walk {
+  animation: critter-bob 0.4s steps(1) infinite;
+}
+@keyframes critter-step {
+  0% { visibility: visible; }
+  50% { visibility: hidden; }
+}
+@keyframes critter-bob {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}

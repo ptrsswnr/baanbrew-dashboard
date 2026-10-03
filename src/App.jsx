@@ -7,6 +7,7 @@ import DateRangeFilter from './components/DateRangeFilter'
 import OverviewPage from './pages/OverviewPage'
 import CustomersPage from './pages/CustomersPage'
 import Lab2Page from './pages/Lab2Page'
+import Critter from './components/Critter'
 import { parseSalesCsv, parseCustomersCsv, getBranchSales } from './lib/metrics'
 import { filterRows, filterCustomers, getDateBounds, getPreviousPeriodRows } from './lib/filters'
 import { branchToSlug, slugToBranch } from './lib/theme'
@@ -153,6 +154,7 @@ function App() {
       </div>
 
       <BottomNav value={tab} onChange={setTab} />
+      <Critter />
     </div>
   )
 }
