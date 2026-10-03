@@ -25,13 +25,14 @@ const COLORS = [
   { id: 'amber', label: 'เหลืองส้ม', a: '#f5a524', b: '#e8590c' },
 ]
 
-// เครื่องแต่งกาย 5 ชิ้น; slot เดียวกัน (หมวก) ใส่ได้ทีละชิ้น
+// เครื่องแต่งกาย 6 ชิ้น; slot เดียวกัน (หมวก) ใส่ได้ทีละชิ้น
 const COSTUMES = [
   { id: 'beret', label: 'เบเรต์บาริสต้า', slot: 'hat' },
   { id: 'crown', label: 'มงกุฎ', slot: 'hat' },
   { id: 'shades', label: 'แว่นกันแดด', slot: 'face' },
   { id: 'bowtie', label: 'โบว์ไท', slot: 'neck' },
   { id: 'apron', label: 'ผ้ากันเปื้อน', slot: 'body' },
+  { id: 'coffee', label: 'แก้วกาแฟ', slot: 'hand' },
 ]
 
 const DEFAULT_LOOK = { color: 'coral', costumes: [] }
@@ -110,12 +111,24 @@ function Costume({ id }) {
           <Rect x={4.5} y={4.1} w={2} h={0.6} fill="#5d371f" />
         </g>
       )
+    case 'coffee':
+      return (
+        <g>
+          <Rect x={9} y={0} w={2} h={2} fill="#f7f2ea" />
+          <Rect x={9} y={0} w={2} h={0.5} fill="#6b3f23" />
+          <Rect x={11} y={0.5} w={1} h={0.5} fill="#f7f2ea" />
+          <Rect x={11.5} y={0.5} w={0.5} h={1.1} fill="#f7f2ea" />
+          <Rect x={11} y={1.2} w={1} h={0.5} fill="#f7f2ea" />
+          <rect className="critter-steam" x={9.6 * C} y={-1 * C} width={0.6 * C} height={0.8 * C} fill="#9aa0b8" />
+          <rect className="critter-steam critter-steam-b" x={10.4 * C} y={-1.8 * C} width={0.6 * C} height={0.8 * C} fill="#9aa0b8" />
+        </g>
+      )
     default:
       return null
   }
 }
 
-// สัตว์พิกเซลตัวเล็กถือแก้วกาแฟ เดินไปมาที่ขอบล่างของจอ — คลิกค้างลากไปวางที่ไหนก็ได้ ปล่อยแล้วตกลงพื้น
+// สัตว์พิกเซลตัวเล็กเดินไปมาที่ขอบล่างของจอ — คลิกค้างลากไปวางที่ไหนก็ได้ ปล่อยแล้วตกลงพื้น
 // เมาส์ชี้ (หรือแตะบนมือถือ) เพื่อเปิดแผงเปลี่ยนสีและเครื่องแต่งกาย
 function Critter() {
   const elRef = useRef(null)
@@ -326,7 +339,7 @@ function Critter() {
         viewBox={`0 0 ${W} ${H}`}
         shapeRendering="crispEdges"
         role="img"
-        aria-label="น้องพิกเซลถือแก้วกาแฟ ชี้หรือแตะเพื่อเปลี่ยนสีและเครื่องแต่งกาย"
+        aria-label="น้องพิกเซล ชี้หรือแตะเพื่อเปลี่ยนสีและเครื่องแต่งกาย"
         className={`critter critter-${visualMode}`}
       >
         <defs>
@@ -354,16 +367,6 @@ function Critter() {
             <Costume key={c.id} id={c.id} />
           ))}
 
-          {/* แก้วกาแฟในมือขวา */}
-          <g>
-            <Rect x={9} y={0} w={2} h={2} fill="#f7f2ea" />
-            <Rect x={9} y={0} w={2} h={0.5} fill="#6b3f23" />
-            <Rect x={11} y={0.5} w={1} h={0.5} fill="#f7f2ea" />
-            <Rect x={11.5} y={0.5} w={0.5} h={1.1} fill="#f7f2ea" />
-            <Rect x={11} y={1.2} w={1} h={0.5} fill="#f7f2ea" />
-            <rect className="critter-steam" x={9.6 * C} y={-1 * C} width={0.6 * C} height={0.8 * C} fill="#9aa0b8" />
-            <rect className="critter-steam critter-steam-b" x={10.4 * C} y={-1.8 * C} width={0.6 * C} height={0.8 * C} fill="#9aa0b8" />
-          </g>
         </g>
       </svg>
 
