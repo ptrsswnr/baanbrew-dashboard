@@ -107,6 +107,12 @@ export function formatNumber(value) {
   return value.toLocaleString('th-TH')
 }
 
+/** ส่วนต่างเป็นสัดส่วนเทียบค่าก่อนหน้า เช่น current=110, previous=100 -> 0.1 (null ถ้า previous เป็น 0 เทียบไม่ได้) */
+export function getPercentDelta(current, previous) {
+  if (previous === 0) return null
+  return (current - previous) / previous
+}
+
 /** จัดรูปแบบเงินบาทแบบย่อสำหรับแกนกราฟ เช่น ฿1.2 ล. หรือ ฿850k */
 export function formatShortCurrency(value) {
   if (value >= 1_000_000) return `฿${(value / 1_000_000).toFixed(1)} ล.`

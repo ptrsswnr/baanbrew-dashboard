@@ -2,30 +2,30 @@ import { formatCurrency, formatNumber } from '../lib/metrics'
 
 function TopCustomersTable({ data }) {
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-      <h2 className="mb-4 text-base font-semibold text-slate-800">ลูกค้าที่ซื้อมากที่สุด 10 อันดับ</h2>
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
+    <div className="rounded-lg bg-bg-surface p-4 shadow-sm ring-1 ring-border sm:p-6">
+      <h2 className="mb-4 text-lg leading-7 font-bold text-ink">ลูกค้าที่ซื้อมากที่สุด 10 อันดับ</h2>
+      <div className="-mx-4 overflow-x-auto sm:mx-0">
+        <table className="w-full min-w-[28rem] text-sm">
           <thead>
-            <tr className="border-b border-slate-200 text-left text-xs text-slate-500">
-              <th className="py-2 pr-3 font-medium">#</th>
-              <th className="py-2 pr-3 font-medium">ลูกค้า</th>
-              <th className="py-2 pr-3 font-medium">สาขาประจำ</th>
-              <th className="py-2 pr-3 text-right font-medium">จำนวนบิล</th>
-              <th className="py-2 pr-3 text-right font-medium">ยอดซื้อรวม</th>
+            <tr className="border-b border-border text-left text-xs text-ink-muted">
+              <th scope="col" className="py-2 pr-3 pl-4 font-medium sm:pl-0">#</th>
+              <th scope="col" className="py-2 pr-3 font-medium">ลูกค้า</th>
+              <th scope="col" className="py-2 pr-3 font-medium">สาขาประจำ</th>
+              <th scope="col" className="py-2 pr-3 text-right font-medium">จำนวนบิล</th>
+              <th scope="col" className="py-2 pr-4 text-right font-medium sm:pr-0">ยอดซื้อรวม</th>
             </tr>
           </thead>
           <tbody>
             {data.map((c, i) => (
-              <tr key={c.customerId} className="border-b border-slate-100 last:border-0">
-                <td className="py-2.5 pr-3 text-slate-500">{i + 1}</td>
+              <tr key={c.customerId} className="border-b border-border/60 last:border-0">
+                <td className="py-2.5 pr-3 pl-4 tabular-nums text-ink-muted sm:pl-0">{i + 1}</td>
                 <td className="py-2.5 pr-3">
-                  <span className="block text-slate-800">{c.nickname}</span>
-                  <span className="block text-xs text-slate-400">{c.customerId}</span>
+                  <span className="block text-ink">{c.nickname}</span>
+                  <span className="block text-xs text-ink-muted">{c.customerId}</span>
                 </td>
-                <td className="py-2.5 pr-3 text-slate-600">{c.homeBranch}</td>
-                <td className="py-2.5 pr-3 text-right text-slate-600">{formatNumber(c.orderCount)}</td>
-                <td className="py-2.5 pr-3 text-right font-medium text-slate-800">
+                <td className="py-2.5 pr-3 text-ink-muted">{c.homeBranch}</td>
+                <td className="py-2.5 pr-3 text-right tabular-nums text-ink-muted">{formatNumber(c.orderCount)}</td>
+                <td className="py-2.5 pr-4 text-right font-semibold tabular-nums text-ink sm:pr-0">
                   {formatCurrency(c.spend)}
                 </td>
               </tr>

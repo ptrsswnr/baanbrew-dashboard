@@ -37,11 +37,11 @@ const CASES = [
 
 function Placeholder({ n }) {
   return (
-    <div className="flex h-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 p-6 text-center text-slate-500">
+    <div className="flex h-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-6 text-center text-ink-muted">
       <div className="text-lg font-medium">ยังไม่ได้ซ่อม</div>
       <div className="mt-1 text-sm">
-        สร้าง <code className="rounded bg-slate-100 px-1">FixedChart{n}</code> ใน{' '}
-        <code className="rounded bg-slate-100 px-1">src/lab2/FixedCharts.jsx</code>
+        สร้าง <code className="rounded bg-bg-page px-1">FixedChart{n}</code> ใน{' '}
+        <code className="rounded bg-bg-page px-1">src/lab2/FixedCharts.jsx</code>
       </div>
     </div>
   )
@@ -50,9 +50,9 @@ function Placeholder({ n }) {
 function Lab2Page({ rows, products }) {
   return (
     <div className="space-y-6">
-      <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-        <h2 className="text-xl font-bold text-slate-800">Lab 2.2 · ซ่อมกราฟแย่</h2>
-        <p className="mt-1 max-w-3xl text-sm text-slate-600">
+      <div className="rounded-lg bg-bg-surface p-5 shadow-sm ring-1 ring-border">
+        <h2 className="text-xl font-bold text-ink">Lab 2.2 · ซ่อมกราฟแย่</h2>
+        <p className="mt-1 max-w-3xl text-sm text-ink-muted">
           กราฟซ้ายมือทุกอันใช้ข้อมูลถูกต้อง แต่ทำให้คนดูเข้าใจผิดหรืออ่านไม่ออก เทียบกับกราฟขวามือที่ตอบคำถามทางธุรกิจได้ชัดเจนกว่า
         </p>
       </div>
@@ -61,13 +61,13 @@ function Lab2Page({ rows, products }) {
         const BadChart = Bad[`BadChart${c.n}`]
         const FixedChart = Fixed[`FixedChart${c.n}`]
         return (
-          <section key={c.n} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+          <section key={c.n} className="rounded-lg bg-bg-surface p-5 shadow-sm ring-1 ring-border">
             <div className="flex flex-wrap items-baseline gap-x-3">
-              <span className="rounded-full bg-slate-800 px-3 py-0.5 text-sm font-semibold text-white">กราฟ {c.n}</span>
-              <h3 className="text-lg font-semibold text-slate-800">{c.title}</h3>
+              <span className="rounded-full bg-ink px-3 py-0.5 text-sm font-semibold text-white">กราฟ {c.n}</span>
+              <h3 className="text-lg font-semibold text-ink">{c.title}</h3>
             </div>
-            <p className="mt-2 font-medium text-slate-700">{c.ask}</p>
-            <ul className="mt-1 list-disc pl-5 text-sm text-slate-500">
+            <p className="mt-2 font-medium text-ink">{c.ask}</p>
+            <ul className="mt-1 list-disc pl-5 text-sm text-ink-muted">
               {c.probe.map((p) => (
                 <li key={p}>{p}</li>
               ))}
@@ -75,13 +75,13 @@ function Lab2Page({ rows, products }) {
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <div>
                 <div className="mb-1 text-sm font-semibold text-red-700">ก่อนซ่อม</div>
-                <div className="h-80 overflow-hidden rounded-lg bg-slate-50 p-2">
+                <div className="h-80 overflow-hidden rounded-lg bg-bg-page p-2">
                   <BadChart rows={rows} products={products} />
                 </div>
               </div>
               <div>
                 <div className="mb-1 text-sm font-semibold text-emerald-700">หลังซ่อม</div>
-                <div className="h-80 overflow-hidden rounded-lg bg-slate-50 p-2">
+                <div className="h-80 overflow-hidden rounded-lg bg-bg-page p-2">
                   {FixedChart ? <FixedChart rows={rows} products={products} /> : <Placeholder n={c.n} />}
                 </div>
               </div>

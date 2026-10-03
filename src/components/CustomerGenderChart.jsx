@@ -1,12 +1,13 @@
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts'
 import { formatNumber } from '../lib/metrics'
+import ChartTooltip from './ChartTooltip'
 
-const COLORS = ['#0ea5e9', '#f472b6', '#94a3b8']
+const COLORS = ['var(--color-brand)', '#f472b6', 'var(--color-ink-muted)']
 
 function CustomerGenderChart({ data }) {
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
-      <h2 className="mb-4 text-base font-semibold text-slate-800">สมาชิกแยกตามเพศ</h2>
+    <div className="h-full rounded-lg bg-bg-surface p-4 shadow-sm ring-1 ring-border sm:p-6">
+      <h2 className="mb-4 text-lg leading-7 font-bold text-ink">สมาชิกแยกตามเพศ</h2>
       <ResponsiveContainer width="100%" height={280}>
         <PieChart>
           <Pie data={data} dataKey="count" nameKey="gender" innerRadius={60} outerRadius={90} paddingAngle={2}>
@@ -14,8 +15,8 @@ function CustomerGenderChart({ data }) {
               <Cell key={entry.gender} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value) => `${formatNumber(value)} คน`} />
-          <Legend />
+          <Tooltip content={<ChartTooltip valueFormatter={(value) => `${formatNumber(value)} คน`} />} />
+          <Legend wrapperStyle={{ fontSize: 13, color: 'var(--color-ink-muted)' }} />
         </PieChart>
       </ResponsiveContainer>
     </div>

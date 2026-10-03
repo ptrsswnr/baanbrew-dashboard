@@ -17,9 +17,9 @@ import {
   formatPercent,
 } from '../lib/metrics'
 
-function CustomersPage({ rows, customers }) {
+function CustomersPage({ rows, customers, resetLabel, onReset }) {
   if (customers.length === 0) {
-    return <EmptyState message="ไม่มีข้อมูลลูกค้าในช่วงที่เลือก ลองเปลี่ยนสาขาหรือวันที่" />
+    return <EmptyState message="ไม่พบข้อมูลในช่วงที่เลือก" actionLabel={resetLabel} onAction={onReset} />
   }
 
   const customersByAgeGroup = getCustomersByAgeGroup(customers)
@@ -29,15 +29,15 @@ function CustomersPage({ rows, customers }) {
   const topCustomers = getTopCustomersBySpend(rows, customers)
 
   return (
-    <div className="space-y-6">
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         <KpiCard label="สมาชิกทั้งหมด" value={formatNumber(getCustomerCount(customers))} />
         <KpiCard label="สมาชิกที่เคยซื้อแล้ว" value={formatPercent(getActivePurchaserShare(customers))} />
       </div>
 
       <NewMembersChart data={newMembersByMonth} />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
         <CustomerAgeChart data={customersByAgeGroup} />
         <CustomerGenderChart data={customersByGender} />
       </div>

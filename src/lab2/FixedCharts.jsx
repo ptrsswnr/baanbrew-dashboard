@@ -7,16 +7,16 @@ import {
 import { revenueByProduct, monthlyRevenue, branchPerformance, weeklyRevenue, daysInMonth, thaiMonth } from './lab2Metrics'
 import { formatCurrency, formatShortCurrency } from '../lib/metrics'
 
-const MAIN = '#0369a1'
-const MUTED = '#bae6fd'
-const INK = '#334155'
+const MAIN = 'var(--color-brand-strong)'
+const MUTED = 'var(--color-brand-tint)'
+const INK = 'var(--color-ink)'
 
 function Frame({ takeaway, note, children }) {
   return (
     <div className="flex h-full flex-col">
-      <p className="text-sm font-semibold text-slate-800">{takeaway}</p>
+      <p className="text-sm font-semibold text-ink">{takeaway}</p>
       <div className="min-h-0 flex-1">{children}</div>
-      {note && <p className="text-xs text-slate-500">{note}</p>}
+      {note && <p className="text-xs text-ink-muted">{note}</p>}
     </div>
   )
 }
@@ -53,7 +53,7 @@ export function FixedChart2({ rows }) {
     <Frame takeaway={`${data[0].branch} ขายได้ ${ratio.toFixed(1)} เท่าของ${data[data.length - 1].branch} (ยอดรวมทั้งช่วงข้อมูล)`}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 24, right: 8, left: 8, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="#e2e8f0" />
+          <CartesianGrid vertical={false} stroke="var(--color-border)" />
           <XAxis dataKey="branch" tick={{ fontSize: 13 }} />
           <YAxis tickFormatter={formatShortCurrency} width={60} domain={[0, 'auto']} tick={{ fontSize: 12 }} />
           <Tooltip formatter={(value) => [formatCurrency(value), 'ยอดขาย']} />
@@ -80,7 +80,7 @@ export function FixedChart3({ rows }) {
     >
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 8, right: 12, left: 8, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="#e2e8f0" />
+          <CartesianGrid vertical={false} stroke="var(--color-border)" />
           <XAxis dataKey="week" tickFormatter={monthTick} minTickGap={50} tick={{ fontSize: 12 }} />
           <YAxis tickFormatter={formatShortCurrency} width={60} domain={[0, 'auto']} tick={{ fontSize: 12 }} />
           <Tooltip
@@ -107,7 +107,7 @@ export function FixedChart4({ rows }) {
     >
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
-          <CartesianGrid vertical={false} stroke="#e2e8f0" />
+          <CartesianGrid vertical={false} stroke="var(--color-border)" />
           <XAxis dataKey="month" tickFormatter={thaiMonth} interval={2} tick={{ fontSize: 11 }} />
           <YAxis tickFormatter={formatShortCurrency} width={56} tick={{ fontSize: 12 }} />
           <Tooltip

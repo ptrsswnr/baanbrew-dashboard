@@ -1,1 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg-page: #f8fafc;
+  --color-bg-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-ink: #1e293b;
+  --color-ink-muted: #475569;
+  --color-brand: #0284c7;
+  --color-brand-strong: #0369a1;
+  --color-brand-tint: #e0f2fe;
+  --color-series-siam: #0284c7;
+  --color-series-silom: #ea580c;
+  --color-series-bangna: #6d28d9;
+  --color-series-university: #047857;
+  --color-series-ari: #a16207;
+  --color-positive: #15803d;
+  --color-negative: #b91c1c;
+
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+}
+
+body {
+  background-color: var(--color-bg-page);
+  line-height: 1.5;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Recharts makes clickable bars focusable; themes its default black focus ring to match the palette */
+.recharts-wrapper :focus-visible {
+  outline: 2px solid var(--color-brand-strong);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

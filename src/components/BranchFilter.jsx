@@ -1,7 +1,11 @@
 function BranchFilter({ branches, value, onChange }) {
   const options = [{ branch: null, label: 'ทุกสาขา' }, ...branches.map((branch) => ({ branch, label: branch }))]
   return (
-    <div role="group" aria-label="กรองตามสาขา" className="flex flex-wrap gap-2">
+    <div
+      role="group"
+      aria-label="กรองตามสาขา"
+      className="flex snap-x gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0"
+    >
       {options.map(({ branch, label }) => {
         const active = branch === value
         return (
@@ -10,10 +14,10 @@ function BranchFilter({ branches, value, onChange }) {
             type="button"
             aria-pressed={active}
             onClick={() => onChange(branch)}
-            className={`rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500 ${
+            className={`h-9 shrink-0 snap-start rounded-full border px-3.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong ${
               active
-                ? 'border-sky-600 bg-sky-600 text-white'
-                : 'border-slate-200 bg-white text-slate-600 hover:border-sky-300 hover:text-sky-700'
+                ? 'border-brand-strong bg-brand-strong text-white'
+                : 'border-border bg-bg-surface text-ink-muted hover:bg-brand-tint'
             }`}
           >
             {label}
