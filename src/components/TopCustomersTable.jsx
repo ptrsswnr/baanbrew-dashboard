@@ -2,12 +2,12 @@ import { formatCurrency, formatNumber } from '../lib/metrics'
 
 function TopCustomersTable({ data }) {
   return (
-    <div className="rounded-lg bg-bg-surface p-4 shadow-sm ring-1 ring-border sm:p-6">
+    <div className="rounded-lg bg-bg-surface p-4 shadow-card sm:p-6">
       <h2 className="mb-4 text-lg leading-7 font-bold text-ink">ลูกค้าที่ซื้อมากที่สุด 10 อันดับ</h2>
       <div className="-mx-4 overflow-x-auto sm:mx-0">
         <table className="w-full min-w-[28rem] text-sm">
           <thead>
-            <tr className="border-b border-border text-left text-xs text-ink-muted">
+            <tr className="bg-bg-page text-left text-xs text-ink-muted">
               <th scope="col" className="py-2 pr-3 pl-4 font-medium sm:pl-0">#</th>
               <th scope="col" className="py-2 pr-3 font-medium">ลูกค้า</th>
               <th scope="col" className="py-2 pr-3 font-medium">สาขาประจำ</th>

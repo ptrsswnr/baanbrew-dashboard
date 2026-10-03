@@ -14,9 +14,9 @@ function BranchFilter({ branches, value, onChange }) {
             type="button"
             aria-pressed={active}
             onClick={() => onChange(branch)}
-            className={`h-9 shrink-0 snap-start rounded-full border px-3.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong ${
+            className={`h-9 shrink-0 snap-start rounded-full border px-3.5 text-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
               active
-                ? 'border-brand-strong bg-brand-strong text-white'
+                ? 'border-transparent bg-gradient-to-r from-[#e23d7e] to-[#f0629a] text-white shadow-sm'
                 : 'border-border bg-bg-surface text-ink-muted hover:bg-brand-tint'
             }`}
           >

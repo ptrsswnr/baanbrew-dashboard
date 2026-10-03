@@ -30,14 +30,14 @@ function CustomersPage({ rows, customers, resetLabel, onReset }) {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        <KpiCard label="สมาชิกทั้งหมด" value={formatNumber(getCustomerCount(customers))} />
-        <KpiCard label="สมาชิกที่เคยซื้อแล้ว" value={formatPercent(getActivePurchaserShare(customers))} />
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+        <KpiCard tone="pink" label="สมาชิกทั้งหมด" value={formatNumber(getCustomerCount(customers))} />
+        <KpiCard tone="purple" label="สมาชิกที่เคยซื้อแล้ว" value={formatPercent(getActivePurchaserShare(customers))} />
       </div>
 
       <NewMembersChart data={newMembersByMonth} />
 
-      <div className="grid gap-4 sm:gap-6 lg:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 xl:grid-cols-2">
         <CustomerAgeChart data={customersByAgeGroup} />
         <CustomerGenderChart data={customersByGender} />
       </div>

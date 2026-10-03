@@ -4,24 +4,28 @@
 @theme {
   --font-sans: "Noto Sans Thai", ui-sans-serif, system-ui, sans-serif;
 
-  --color-bg-page: #f8fafc;
+  --color-bg-page: #f1f2f8;
   --color-bg-surface: #ffffff;
-  --color-border: #e2e8f0;
-  --color-ink: #1e293b;
-  --color-ink-muted: #475569;
-  --color-brand: #0284c7;
-  --color-brand-strong: #0369a1;
-  --color-brand-tint: #e0f2fe;
-  --color-series-siam: #0284c7;
-  --color-series-silom: #ea580c;
-  --color-series-bangna: #6d28d9;
-  --color-series-university: #047857;
-  --color-series-ari: #a16207;
+  --color-border: #e8eaf3;
+  --color-ink: #23233a;
+  --color-ink-muted: #5f6480;
+  --color-brand: #ec4d8c;
+  --color-brand-strong: #d6336f;
+  --color-brand-tint: #fde8f1;
+  --color-side: #1d1d22;
+  --color-side-ink: #a4a6b8;
+  --color-series-siam: #ec4d8c;
+  --color-series-silom: #f5a524;
+  --color-series-bangna: #8250c4;
+  --color-series-university: #3aa9e4;
+  --color-series-ari: #22b573;
   --color-positive: #15803d;
   --color-negative: #b91c1c;
 
   --radius-lg: 1rem;
   --radius-md: 0.75rem;
+
+  --shadow-card: 0 1px 2px rgb(35 35 58 / 0.04), 0 8px 24px rgb(35 35 58 / 0.06);
 }
 
 body {

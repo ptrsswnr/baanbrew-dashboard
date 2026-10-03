@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Papa from 'papaparse'
-import TabNav from './components/TabNav'
+import TabNav, { TABS } from './components/TabNav'
 import BottomNav from './components/BottomNav'
 import BranchFilter from './components/BranchFilter'
 import DateRangeFilter from './components/DateRangeFilter'
@@ -95,7 +95,7 @@ function App() {
       <div className="mx-auto max-w-7xl space-y-4 p-4 sm:space-y-6 sm:p-8">
         <div className="h-10 w-64 animate-pulse rounded-md bg-border" />
         <div className="h-12 animate-pulse rounded-md bg-border" />
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
           {[0, 1, 2, 3].map((i) => (
             <div key={i} className="h-24 animate-pulse rounded-lg bg-border" />
           ))}
@@ -105,38 +105,51 @@ function App() {
     )
   }
 
-  return (
-    <div className="min-h-screen bg-bg-page pb-20 md:pb-8">
-      <div className="mx-auto max-w-7xl space-y-4 p-4 sm:space-y-6 sm:p-8">
-        <h1 className="text-2xl leading-9 font-bold text-ink">บ้านบรู Dashboard</h1>
+  const current = TABS.find((t) => t.id === tab) || TABS[0]
 
+  return (
+    <div className="min-h-screen bg-bg-page pb-20 md:pb-0">
+      <div className="mx-auto flex max-w-[1600px] gap-6 p-4 lg:p-6">
         <TabNav value={tab} onChange={setTab} />
 
-        {tab !== 'lab2' && (
-          <div className="sticky top-0 z-[5] flex flex-col gap-4 rounded-lg bg-bg-surface p-4 shadow-sm ring-1 ring-border sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-6">
-            <BranchFilter branches={branches} value={branch} onChange={setBranch} />
-            <DateRangeFilter min={dateBounds.min} max={dateBounds.max} value={dateRange} onChange={setDateRange} />
-          </div>
-        )}
+        <main className="min-w-0 flex-1 space-y-4 sm:space-y-6">
+          <header className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h1 className="text-2xl leading-9 font-bold text-ink">{current.title}</h1>
+              <p className="text-sm text-ink-muted">{current.subtitle}</p>
+            </div>
+            <span className="flex items-center gap-2 rounded-full bg-bg-surface py-1.5 pr-4 pl-1.5 text-sm font-medium text-ink shadow-card">
+              <span className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-series-bangna text-sm font-bold text-white" aria-hidden="true">บ</span>
+              บ้านบรู
+            </span>
+          </header>
 
-        {tab === 'overview' && (
-          <OverviewPage
-            rows={filteredRows}
-            previousRows={previousRows}
-            onBranchClick={setBranch}
-            resetLabel="ล้างตัวกรอง"
-            onReset={resetFilters}
-          />
-        )}
-        {tab === 'customers' && (
-          <CustomersPage
-            rows={filteredRows}
-            customers={filteredCustomers}
-            resetLabel="ล้างตัวกรอง"
-            onReset={resetFilters}
-          />
-        )}
-        {tab === 'lab2' && <Lab2Page rows={rows} products={products} />}
+          {tab !== 'lab2' && (
+            <div className="sticky top-2 z-[5] flex flex-col gap-4 rounded-lg bg-bg-surface p-4 shadow-card sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-5">
+              <BranchFilter branches={branches} value={branch} onChange={setBranch} />
+              <DateRangeFilter min={dateBounds.min} max={dateBounds.max} value={dateRange} onChange={setDateRange} />
+            </div>
+          )}
+
+          {tab === 'overview' && (
+            <OverviewPage
+              rows={filteredRows}
+              previousRows={previousRows}
+              onBranchClick={setBranch}
+              resetLabel="ล้างตัวกรอง"
+              onReset={resetFilters}
+            />
+          )}
+          {tab === 'customers' && (
+            <CustomersPage
+              rows={filteredRows}
+              customers={filteredCustomers}
+              resetLabel="ล้างตัวกรอง"
+              onReset={resetFilters}
+            />
+          )}
+          {tab === 'lab2' && <Lab2Page rows={rows} products={products} />}
+        </main>
       </div>
 
       <BottomNav value={tab} onChange={setTab} />

@@ -42,34 +42,38 @@ function OverviewPage({ rows, previousRows, onBranchClick, resetLabel, onReset }
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
         <KpiCard
+          tone="pink"
           label="ยอดขายรวม"
           value={formatCurrency(getTotalSales(rows))}
           delta={buildDelta(getTotalSales(rows), prevTotals?.total)}
         />
         <KpiCard
+          tone="purple"
           label="จำนวนบิล"
           value={formatNumber(getOrderCount(rows))}
           delta={buildDelta(getOrderCount(rows), prevTotals?.orders)}
         />
         <KpiCard
+          tone="blue"
           label="ยอดเฉลี่ยต่อบิล"
           value={formatCurrency(getAverageOrderValue(rows))}
           delta={buildDelta(getAverageOrderValue(rows), prevTotals?.avg)}
         />
         <KpiCard
+          tone="amber"
           label="ลูกค้าสมาชิก (ไม่ซ้ำ)"
           value={formatNumber(getUniqueMemberCount(rows))}
           delta={buildDelta(getUniqueMemberCount(rows), prevTotals?.members)}
         />
       </div>
 
-      <div className="grid gap-4 sm:gap-6 lg:grid-cols-12">
-        <div className="lg:col-span-8">
+      <div className="grid gap-4 sm:gap-6 xl:grid-cols-12">
+        <div className="xl:col-span-8">
           <SalesLineChart data={dailySales} />
         </div>
-        <div className="lg:col-span-4">
+        <div className="xl:col-span-4">
           <BranchBarChart data={branchSales} onBranchClick={onBranchClick} />
         </div>
       </div>

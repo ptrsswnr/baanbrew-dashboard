@@ -21,15 +21,15 @@ function DateRangeFilter({ min, max, value, onChange }) {
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <div className="flex gap-1 rounded-md bg-bg-page p-1">
+      <div className="flex gap-1 rounded-full bg-bg-page p-1">
         {presets.map((preset) => (
           <button
             key={preset.label}
             type="button"
             aria-pressed={isActivePreset(preset.range)}
             onClick={() => onChange(preset.range)}
-            className={`rounded px-2.5 py-1 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong ${
-              isActivePreset(preset.range) ? 'bg-bg-surface text-ink shadow-sm' : 'text-ink-muted hover:text-ink'
+            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+              isActivePreset(preset.range) ? 'bg-brand-strong text-white shadow-sm' : 'text-ink-muted hover:text-ink'
             }`}
           >
             {preset.label}
@@ -45,7 +45,7 @@ function DateRangeFilter({ min, max, value, onChange }) {
           max={value.to || max}
           value={value.from}
           onChange={(e) => onChange({ ...value, from: e.target.value })}
-          className="rounded-md border border-border px-2.5 py-1.5 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong"
+          className="rounded-full border border-border bg-bg-page px-3 py-1.5 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         />
       </label>
       <label className="flex items-center gap-1.5 text-sm text-ink-muted">
@@ -56,14 +56,14 @@ function DateRangeFilter({ min, max, value, onChange }) {
           max={max}
           value={value.to}
           onChange={(e) => onChange({ ...value, to: e.target.value })}
-          className="rounded-md border border-border px-2.5 py-1.5 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong"
+          className="rounded-full border border-border bg-bg-page px-3 py-1.5 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         />
       </label>
       {hasFilter && (
         <button
           type="button"
           onClick={() => onChange({ from: '', to: '' })}
-          className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-muted underline-offset-2 hover:text-brand-strong hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-strong"
+          className="rounded-full px-3 py-1.5 text-sm font-medium text-ink-muted underline-offset-2 hover:text-brand-strong hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           ล้างตัวกรองวันที่
         </button>

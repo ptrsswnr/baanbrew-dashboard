@@ -50,7 +50,7 @@ function Placeholder({ n }) {
 function Lab2Page({ rows, products }) {
   return (
     <div className="space-y-6">
-      <div className="rounded-lg bg-bg-surface p-5 shadow-sm ring-1 ring-border">
+      <div className="rounded-lg bg-bg-surface p-5 shadow-card">
         <h2 className="text-xl font-bold text-ink">Lab 2.2 · ซ่อมกราฟแย่</h2>
         <p className="mt-1 max-w-3xl text-sm text-ink-muted">
           กราฟซ้ายมือทุกอันใช้ข้อมูลถูกต้อง แต่ทำให้คนดูเข้าใจผิดหรืออ่านไม่ออก เทียบกับกราฟขวามือที่ตอบคำถามทางธุรกิจได้ชัดเจนกว่า
@@ -61,7 +61,7 @@ function Lab2Page({ rows, products }) {
         const BadChart = Bad[`BadChart${c.n}`]
         const FixedChart = Fixed[`FixedChart${c.n}`]
         return (
-          <section key={c.n} className="rounded-lg bg-bg-surface p-5 shadow-sm ring-1 ring-border">
+          <section key={c.n} className="rounded-lg bg-bg-surface p-5 shadow-card">
             <div className="flex flex-wrap items-baseline gap-x-3">
               <span className="rounded-full bg-ink px-3 py-0.5 text-sm font-semibold text-white">กราฟ {c.n}</span>
               <h3 className="text-lg font-semibold text-ink">{c.title}</h3>
@@ -72,7 +72,7 @@ function Lab2Page({ rows, products }) {
                 <li key={p}>{p}</li>
               ))}
             </ul>
-            <div className="mt-4 grid gap-4 lg:grid-cols-2">
+            <div className="mt-4 grid gap-4 xl:grid-cols-2">
               <div>
                 <div className="mb-1 text-sm font-semibold text-red-700">ก่อนซ่อม</div>
                 <div className="h-80 overflow-hidden rounded-lg bg-bg-page p-2">

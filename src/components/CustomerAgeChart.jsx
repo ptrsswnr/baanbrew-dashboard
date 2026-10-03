@@ -4,7 +4,7 @@ import ChartTooltip from './ChartTooltip'
 
 function CustomerAgeChart({ data }) {
   return (
-    <div className="h-full rounded-lg bg-bg-surface p-4 shadow-sm ring-1 ring-border sm:p-6">
+    <div className="h-full rounded-lg bg-bg-surface p-4 shadow-card sm:p-6">
       <h2 className="mb-4 text-lg leading-7 font-bold text-ink">สมาชิกแยกตามช่วงอายุ</h2>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data}>
