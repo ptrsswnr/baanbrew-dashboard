@@ -97,6 +97,9 @@ function CustomerListCard({ rfm, picked, onClose }) {
         </div>
       }
     >
+      <p role="note" className="mb-3 rounded-lg bg-brand-tint px-3 py-2 text-sm text-ink">
+        ⚠️ รหัสลูกค้าและยอดซื้อเป็นข้อมูลส่วนบุคคลตาม PDPA ใช้ภายในทีมเพื่อทำการตลาดเท่านั้น ห้ามส่งต่อหรือเผยแพร่ และลบไฟล์ CSV เมื่อใช้งานเสร็จ
+      </p>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[480px] text-sm">
           <thead className="text-left text-ink-muted">
