@@ -31,6 +31,29 @@ export function parseSalesCsv(csvText) {
   })
 }
 
+/**
+ * แปลงแถว CSV ดิบ (ผลจาก Papa.parse แบบ header) เป็นแถวที่ใช้กับ src/lib/analytics/
+ * ชื่อฟิลด์เป็น snake_case: order_id, datetime, date, branch, product_id, qty, unit_price, revenue, customer_id
+ * date ตัดจาก datetime 10 ตัวแรก (datetime มี +07:00 อยู่แล้ว จึงเป็นวันที่ไทย)
+ */
+export function prepareRows(rawRows) {
+  return rawRows.map((row) => {
+    const qty = Number(row.qty)
+    const unit_price = Number(row.unit_price)
+    return {
+      order_id: row.order_id,
+      datetime: row.datetime,
+      date: row.datetime.slice(0, 10),
+      branch: row.branch,
+      product_id: row.product_id,
+      qty,
+      unit_price,
+      revenue: qty * unit_price,
+      customer_id: row.customer_id ? row.customer_id.trim() : '',
+    }
+  })
+}
+
 /** ยอดขายรวม = ผลรวมของ qty * unitPrice ของทุกแถว */
 export function getTotalSales(rows) {
   return rows.reduce((sum, row) => sum + row.amount, 0)
