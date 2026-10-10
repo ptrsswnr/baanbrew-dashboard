@@ -1,5 +1,6 @@
 export const TABS = [
   { id: 'overview', label: 'ภาพรวมยอดขาย', shortLabel: 'ภาพรวม', title: 'ภาพรวมยอดขาย', subtitle: 'ยอดขาย จำนวนบิล และสาขาที่ขายดี' },
+  { id: 'overviewcsv', label: 'ภาพรวม (CSV)', shortLabel: 'CSV', title: 'ภาพรวม (CSV)', subtitle: 'ภาพรวมจากไฟล์ sales.csv ตามแบบของอาจารย์ (lab4-student-pack)' },
   { id: 'customers', label: 'ข้อมูลลูกค้า', shortLabel: 'ลูกค้า', title: 'ข้อมูลลูกค้า', subtitle: 'สมาชิก กลุ่มอายุ และลูกค้าประจำ' },
   { id: 'lab2', label: 'Lab 2.2 · ซ่อมกราฟแย่', shortLabel: 'Lab', title: 'Lab 2.2 · ซ่อมกราฟแย่', subtitle: 'เทียบกราฟที่แย่กับกราฟที่แก้แล้ว' },
   { id: 'live', label: 'สด · Firestore', shortLabel: 'สด', title: 'ยอดขายสด', subtitle: 'ข้อมูลจาก Firestore อัปเดตเองแบบ real-time และบันทึกยอดขายใหม่ได้' },
@@ -8,6 +9,7 @@ export const TABS = [
 
 export const TAB_ICONS = {
   overview: <path d="M4 20V10M10 20V4M16 20V13M22 20V8" />,
+  overviewcsv: <path d="M4 4h16v16H4zM4 10h16M10 4v16" />,
   customers: (
     <>
       <circle cx="9" cy="8" r="3" />

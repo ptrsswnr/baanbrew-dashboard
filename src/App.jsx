@@ -8,11 +8,12 @@ import OverviewPage from './pages/OverviewPage'
 import CustomersPage from './pages/CustomersPage'
 import Lab2Page from './pages/Lab2Page'
 import Critter from './components/Critter'
+import OverviewCsv from './lab4/OverviewCsv'
 import LiveTab from './lab3/LiveTab'
 import RulesTester from './lab3/RulesTester'
 import SetupGuide from './lab3/SetupGuide'
 import { isConfigured } from './lab3/firebase'
-import { parseSalesCsv, parseCustomersCsv, getBranchSales } from './lib/metrics'
+import { parseSalesCsv, parseCustomersCsv, getBranchSales, prepareRows } from './lib/metrics'
 import { filterRows, filterCustomers, getDateBounds, getPreviousPeriodRows } from './lib/filters'
 import { branchToSlug, slugToBranch } from './lib/theme'
 
@@ -43,6 +44,7 @@ function buildHash(tab, branch, dateRange) {
 
 function App() {
   const [rows, setRows] = useState(null)
+  const [csvRows, setCsvRows] = useState(null) // แถวรูปแบบ snake_case จาก prepareRows() สำหรับแท็บ "ภาพรวม (CSV)"
   const [customers, setCustomers] = useState(null)
   const [products, setProducts] = useState(null)
   const [error, setError] = useState(null)
@@ -60,6 +62,7 @@ function App() {
     ])
       .then(([salesText, customersText, productsText]) => {
         setRows(parseSalesCsv(salesText))
+        setCsvRows(prepareRows(Papa.parse(salesText, { header: true, skipEmptyLines: true }).data))
         setCustomers(parseCustomersCsv(customersText))
         setProducts(parseProductsCsv(productsText))
       })
@@ -129,7 +132,7 @@ function App() {
             </span>
           </header>
 
-          {tab !== 'lab2' && tab !== 'live' && tab !== 'rules' && (
+          {tab !== 'lab2' && tab !== 'live' && tab !== 'rules' && tab !== 'overviewcsv' && (
             <div className="sticky top-2 z-[5] flex flex-col gap-4 rounded-lg bg-bg-surface p-4 shadow-card sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-5">
               <BranchFilter branches={branches} value={branch} onChange={setBranch} />
               <DateRangeFilter min={dateBounds.min} max={dateBounds.max} value={dateRange} onChange={setDateRange} />
@@ -145,6 +148,7 @@ function App() {
               onReset={resetFilters}
             />
           )}
+          {tab === 'overviewcsv' && csvRows && <OverviewCsv rows={csvRows} />}
           {tab === 'customers' && (
             <CustomersPage
               rows={filteredRows}
