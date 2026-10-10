@@ -2,6 +2,8 @@ export const TABS = [
   { id: 'overview', label: 'ภาพรวมยอดขาย', shortLabel: 'ภาพรวม', title: 'ภาพรวมยอดขาย', subtitle: 'ยอดขาย จำนวนบิล และสาขาที่ขายดี' },
   { id: 'customers', label: 'ข้อมูลลูกค้า', shortLabel: 'ลูกค้า', title: 'ข้อมูลลูกค้า', subtitle: 'สมาชิก กลุ่มอายุ และลูกค้าประจำ' },
   { id: 'lab2', label: 'Lab 2.2 · ซ่อมกราฟแย่', shortLabel: 'Lab', title: 'Lab 2.2 · ซ่อมกราฟแย่', subtitle: 'เทียบกราฟที่แย่กับกราฟที่แก้แล้ว' },
+  { id: 'live', label: 'สด · Firestore', shortLabel: 'สด', title: 'ยอดขายสด', subtitle: 'ข้อมูลจาก Firestore อัปเดตเองแบบ real-time และบันทึกยอดขายใหม่ได้' },
+  { id: 'rules', label: 'ทดสอบ Rules', shortLabel: 'Rules', title: 'ทดสอบ Security Rules', subtitle: 'ลองโจมตีฐานข้อมูลของตัวเองเพื่อดูว่า rules กันได้จริง' },
 ]
 
 export const TAB_ICONS = {
@@ -15,6 +17,8 @@ export const TAB_ICONS = {
     </>
   ),
   lab2: <path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 8.5V3" />,
+  live: <path d="M13 2 4 14h7l-1 8 9-12h-7z" />,
+  rules: <path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6zM9 12l2 2 4-4" />,
 }
 
 // แถบข้าง (sidebar) สีเข้ม: ใช้บนจอ ≥768px (ที่แคบกว่านั้นใช้ BottomNav แทน ตาม design.md ส่วน 6)
