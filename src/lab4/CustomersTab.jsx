@@ -1,5 +1,5 @@
 // Lab 4.1–4.2 · ลูกค้าและเมนู: RFM, Cohort, ABC
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ResponsiveContainer, BarChart, Bar, ComposedChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   LabelList, Cell, ReferenceLine,
@@ -52,6 +52,70 @@ function RfmCard({ rfm, onPick, picked }) {
                 <td className="text-right tabular-nums">{d.customers.toLocaleString()}</td>
                 <td className="text-right tabular-nums">{fmtBaht(d.revenue)}</td>
                 <td className="pl-4 text-stone-600">{SEG_TH[d.segment].action}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </Card>
+  );
+}
+
+// ---------------- รายชื่อลูกค้าในกลุ่มที่คลิก (Lab 4.1B) ----------------
+const TOP_N = 15;
+
+/** ดาวน์โหลด CSV ทั้งกลุ่ม ใส่ BOM (﻿) นำหน้า เพื่อให้ Excel อ่านภาษาไทยได้ */
+function downloadCsv(segment, list) {
+  const header = ["รหัสลูกค้า", "ไม่ได้มา(วัน)", "จำนวนบิล", "ยอดซื้อรวม(บาท)", "R", "F", "M", "กลุ่ม"];
+  const lines = list.map((c) => [c.id, c.R, c.F, c.M, c.r, c.f, c.m, c.segment].join(","));
+  const blob = new Blob(["﻿" + [header.join(","), ...lines].join("\r\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `rfm-${segment}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function CustomerListCard({ rfm, picked, onClose }) {
+  const list = useMemo(
+    () => rfm.customers.filter((c) => c.segment === picked).sort((a, b) => b.M - a.M || a.id.localeCompare(b.id)),
+    [rfm, picked],
+  );
+  const seg = SEG_TH[picked];
+  return (
+    <Card
+      title={`รายชื่อลูกค้า · ${seg.th} (${list.length.toLocaleString()} คน)`}
+      sub={`แสดง ${Math.min(TOP_N, list.length)} คนแรก เรียงตามยอดซื้อรวมมากไปน้อย · ${seg.action}`}
+      right={
+        <div className="flex gap-2">
+          <button onClick={() => downloadCsv(picked, list)}
+                  className="rounded-lg bg-stone-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-stone-700">
+            ดาวน์โหลด CSV ({list.length.toLocaleString()} แถว)
+          </button>
+          <button onClick={onClose} className="rounded-lg px-3 py-1.5 text-sm text-stone-600 ring-1 ring-stone-300 hover:bg-stone-100">ปิด</button>
+        </div>
+      }
+    >
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[480px] text-sm">
+          <thead className="text-left text-stone-500">
+            <tr>
+              <th className="py-1 font-medium">รหัสลูกค้า</th>
+              <th className="text-right font-medium">ไม่ได้มา (วัน)</th>
+              <th className="text-right font-medium">จำนวนบิล</th>
+              <th className="text-right font-medium">ยอดซื้อ</th>
+              <th className="text-center font-medium">R-F-M</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.slice(0, TOP_N).map((c) => (
+              <tr key={c.id} className="border-t border-stone-100">
+                <td className="py-1.5 font-medium">{c.id}</td>
+                <td className="text-right tabular-nums">{c.R.toLocaleString()}</td>
+                <td className="text-right tabular-nums">{c.F.toLocaleString()}</td>
+                <td className="text-right tabular-nums">{fmtBaht(c.M)}</td>
+                <td className="text-center tabular-nums text-stone-600">{c.r}-{c.f}-{c.m}</td>
               </tr>
             ))}
           </tbody>
@@ -159,7 +223,7 @@ export default function CustomersTab({ source }) {
       {(d) => (
         <div className="space-y-6">
           <RfmCard rfm={d.rfm} picked={picked} onPick={(s) => setPicked((p) => (p === s ? null : s))} />
-          {/* Lab 4.1B: แสดงรายชื่อลูกค้าในกลุ่มที่คลิก (picked) + ปุ่มดาวน์โหลด CSV */}
+          {picked && !d.rfm.error && <CustomerListCard rfm={d.rfm} picked={picked} onClose={() => setPicked(null)} />}
           <CohortCard cohort={d.cohort} />
           <AbcCard abc={d.abc} />
         </div>
