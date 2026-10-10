@@ -8,6 +8,10 @@ import OverviewPage from './pages/OverviewPage'
 import CustomersPage from './pages/CustomersPage'
 import Lab2Page from './pages/Lab2Page'
 import Critter from './components/Critter'
+import LiveTab from './lab3/LiveTab'
+import RulesTester from './lab3/RulesTester'
+import SetupGuide from './lab3/SetupGuide'
+import { isConfigured } from './lab3/firebase'
 import { parseSalesCsv, parseCustomersCsv, getBranchSales } from './lib/metrics'
 import { filterRows, filterCustomers, getDateBounds, getPreviousPeriodRows } from './lib/filters'
 import { branchToSlug, slugToBranch } from './lib/theme'
@@ -125,7 +129,7 @@ function App() {
             </span>
           </header>
 
-          {tab !== 'lab2' && (
+          {tab !== 'lab2' && tab !== 'live' && tab !== 'rules' && (
             <div className="sticky top-2 z-[5] flex flex-col gap-4 rounded-lg bg-bg-surface p-4 shadow-card sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:p-5">
               <BranchFilter branches={branches} value={branch} onChange={setBranch} />
               <DateRangeFilter min={dateBounds.min} max={dateBounds.max} value={dateRange} onChange={setDateRange} />
@@ -150,6 +154,8 @@ function App() {
             />
           )}
           {tab === 'lab2' && <Lab2Page rows={rows} products={products} />}
+          {tab === 'live' && (isConfigured ? <LiveTab /> : <SetupGuide />)}
+          {tab === 'rules' && (isConfigured ? <RulesTester /> : <SetupGuide />)}
         </main>
       </div>
 

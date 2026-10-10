@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 
 .playwright-mcp/
+
+# Firebase (Lab 3)
+.env
+.env.local
+secrets/
+import-summary.json
+.firebase/
+*-firebase-adminsdk-*.json
