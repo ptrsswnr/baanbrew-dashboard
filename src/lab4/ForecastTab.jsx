@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import {
   ResponsiveContainer, ComposedChart, Line, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ReferenceLine,
 } from "recharts";
-import { AnalyticsShell, Card, Pending, Insight, MAIN, GREEN, MUTED, INK, thaiDay } from "./ui.jsx";
+import { AnalyticsShell, Card, Pending, Insight, MAIN, RAMP, MUTED, INK, thaiDay } from "./ui.jsx";
 import { useAnalytics } from "./useAnalytics.js";
 import { toSeries } from "../lib/analytics/daily.js";
 import { seasonalForecast, backtest } from "../lib/analytics/forecast.js";
@@ -39,7 +39,7 @@ function ForecastCard({ daily }) {
           right={<div className="flex flex-wrap gap-1">
             {[null, ...BRANCHES].map((b) => (
               <button key={b ?? "all"} onClick={() => setBranch(b)}
-                      className={`rounded-lg px-2.5 py-1 text-sm ${branch === b ? "bg-stone-900 text-white" : "text-stone-600 ring-1 ring-stone-200"}`}>{b ?? "รวม"}</button>
+                      className={`rounded-lg px-2.5 py-1 text-sm ${branch === b ? "bg-ink text-white" : "text-ink-muted ring-1 ring-border"}`}>{b ?? "รวม"}</button>
             ))}
           </div>}>
       {result.error ? <Pending lab="Lab 4.4" error={result.error} /> : (
@@ -52,13 +52,13 @@ function ForecastCard({ daily }) {
           <div className="mt-4 h-72">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={r.chart} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#eee" />
+                <CartesianGrid vertical={false} stroke="#e8eaf3" />
                 <XAxis dataKey="date" tickFormatter={shortDay} minTickGap={36} tick={{ fontSize: 12 }} />
                 <YAxis tickFormatter={fmtShortBaht} width={56} domain={[0, "auto"]} tick={{ fontSize: 12 }} />
                 <Tooltip labelFormatter={thaiDay} formatter={(v, n) => [Array.isArray(v) ? `${fmtBaht(v[0])} – ${fmtBaht(v[1])}` : fmtBaht(v), n]} />
                 <Legend wrapperStyle={{ fontSize: 13 }} />
                 <ReferenceLine x={r.lastDate} stroke={MUTED} strokeDasharray="3 3" label={{ value: "ข้อมูลถึง", position: "insideTopLeft", fontSize: 11, fill: INK }} />
-                <Area name="ช่วงคาดการณ์" dataKey="band" stroke="none" fill={GREEN[1]} isAnimationActive={false} />
+                <Area name="ช่วงคาดการณ์" dataKey="band" stroke="none" fill={RAMP[1]} isAnimationActive={false} />
                 <Line name="ยอดจริง" dataKey="actual" stroke={INK} strokeWidth={2} dot={false} isAnimationActive={false} />
                 <Line name="คาดการณ์" dataKey="forecast" stroke={MAIN} strokeWidth={2} strokeDasharray="6 4" dot={false} isAnimationActive={false} />
               </ComposedChart>
@@ -78,10 +78,10 @@ function ForecastCard({ daily }) {
 
 function Stat({ label, value, note, muted }) {
   return (
-    <div className="rounded-lg bg-stone-50 p-3">
-      <div className="text-xs text-stone-500">{label}</div>
-      <div className={`text-2xl font-semibold tabular-nums ${muted ? "text-stone-500" : ""}`}>{value}</div>
-      {note && <div className="text-xs text-stone-400">{note}</div>}
+    <div className="rounded-lg bg-bg-page p-3">
+      <div className="text-xs text-ink-muted">{label}</div>
+      <div className={`text-2xl font-semibold tabular-nums ${muted ? "text-ink-muted" : ""}`}>{value}</div>
+      {note && <div className="text-xs text-ink-muted/60">{note}</div>}
     </div>
   );
 }
@@ -99,7 +99,7 @@ function AnomalyCard({ daily, holidays }) {
       {/* Lab 4.5B: เมื่อคลิกแถว (focus) ให้แสดงกราฟยอดจริงเทียบค่าปกติ ±4 สัปดาห์รอบวันนั้น */}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[600px] text-sm tabular-nums">
-          <thead className="text-left text-stone-500">
+          <thead className="text-left text-ink-muted">
             <tr><th className="py-1 font-medium">#</th><th className="font-medium">วันที่</th><th className="font-medium">สาขา</th>
               <th className="text-right font-medium">ยอดจริง</th><th className="text-right font-medium">ปกติ</th><th className="pl-4 font-medium">ต่างจากปกติ</th></tr>
           </thead>
@@ -108,15 +108,15 @@ function AnomalyCard({ daily, holidays }) {
               const sel = focus && focus.date === a.date && focus.branch === a.branch;
               return (
                 <tr key={a.date + a.branch} onClick={() => setFocus(sel ? null : a)}
-                    className={`cursor-pointer border-t border-stone-100 hover:bg-stone-50 ${sel ? "bg-emerald-50" : ""}`}>
-                  <td className="py-1.5 text-stone-400">{i + 1}</td>
-                  <td>{thaiDay(a.date)} <span className="text-stone-400">{new Date(a.date + "T00:00:00").toLocaleDateString("th-TH", { weekday: "short" })}</span></td>
+                    className={`cursor-pointer border-t border-border hover:bg-bg-page ${sel ? "bg-brand-tint" : ""}`}>
+                  <td className="py-1.5 text-ink-muted/60">{i + 1}</td>
+                  <td>{thaiDay(a.date)} <span className="text-ink-muted/60">{new Date(a.date + "T00:00:00").toLocaleDateString("th-TH", { weekday: "short" })}</span></td>
                   <td>{a.branch}</td>
                   <td className="text-right">{fmtBaht(a.actual)}</td>
-                  <td className="text-right text-stone-500">{fmtBaht(a.expected)}</td>
+                  <td className="text-right text-ink-muted">{fmtBaht(a.expected)}</td>
                   <td className="pl-4">
                     {a.change < 0
-                      ? <span className="font-medium text-red-700">▼ ต่ำกว่าปกติ {Math.round(-a.change * 100)}%</span>
+                      ? <span className="font-medium text-negative">▼ ต่ำกว่าปกติ {Math.round(-a.change * 100)}%</span>
                       : <span className="font-medium text-amber-700">▲ สูงกว่าปกติ {Math.round(a.change * 100)}%</span>}
                   </td>
                 </tr>
@@ -140,7 +140,7 @@ export default function ForecastTab({ source }) {
       {(d) => d.daily.error ? <Pending lab="pipeline" error={d.daily.error} /> : (
         <div className="space-y-6">
           {d.meta.alerts?.length > 0 && (
-            <p className="rounded-lg bg-red-50 p-3 text-sm text-red-800">
+            <p className="rounded-lg bg-red-50 p-3 text-sm text-negative">
               🚨 ยอดวันล่าสุดผิดปกติ: {d.meta.alerts.map((a) => `${a.branch} ${fmtBaht(a.actual)} (ปกติ ${fmtBaht(a.expected)})`).join(", ")}
             </p>
           )}

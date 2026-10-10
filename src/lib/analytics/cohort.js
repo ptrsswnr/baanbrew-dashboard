@@ -18,7 +18,8 @@ export function computeCohorts(rows, asOf) {
   const lastMonth = asOf.slice(0, 7);
   const daysInLastMonth = Number(asOf.slice(8, 10));
   const [ly, lm] = lastMonth.split("-").map(Number);
-  const lastMonthPartial = daysInLastMonth < new Date(Date.UTC(ly, lm, 0)).getUTCDate();
+  const daysInMonth = new Date(Date.UTC(ly, lm, 0)).getUTCDate(); // จำนวนวันเต็มของเดือนสุดท้าย (หน้าเว็บใช้แสดง "4 จาก 31 วัน")
+  const lastMonthPartial = daysInLastMonth < daysInMonth;
 
   // เดือนที่แต่ละลูกค้าซื้อ (เซต จึงนับซ้ำในเดือนเดียวกันครั้งเดียว)
   const monthsOf = new Map();
@@ -50,5 +51,5 @@ export function computeCohorts(rows, asOf) {
     return { cohort, size: members.length, retention };
   });
 
-  return { cohorts, lastMonth, lastMonthPartial, daysInLastMonth };
+  return { cohorts, lastMonth, lastMonthPartial, daysInLastMonth, daysInMonth };
 }

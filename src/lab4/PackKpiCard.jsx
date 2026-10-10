@@ -1,9 +1,9 @@
 export default function KpiCard({ label, value, note }) {
   return (
-    <div className="rounded-xl bg-white p-5 ring-1 ring-stone-200">
-      <div className="text-sm text-stone-500">{label}</div>
-      <div className="mt-1 text-2xl sm:text-3xl font-semibold tabular-nums text-stone-900">{value}</div>
-      {note && <div className="mt-1 text-xs text-stone-400">{note}</div>}
+    <div className="rounded-lg bg-bg-surface p-5 shadow-card">
+      <div className="text-sm text-ink-muted">{label}</div>
+      <div className="mt-1 text-2xl sm:text-3xl font-semibold tabular-nums text-ink">{value}</div>
+      {note && <div className="mt-1 text-xs text-ink-muted/60">{note}</div>}
     </div>
   );
 }
