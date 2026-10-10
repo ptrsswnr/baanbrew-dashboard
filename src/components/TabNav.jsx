@@ -3,6 +3,8 @@ export const TABS = [
   { id: 'overviewcsv', label: 'ภาพรวม (CSV)', shortLabel: 'CSV', title: 'ภาพรวม (CSV)', subtitle: 'ภาพรวมจากไฟล์ sales.csv ตามแบบของอาจารย์ (lab4-student-pack)' },
   { id: 'customers', label: 'ข้อมูลลูกค้า', shortLabel: 'ลูกค้า', title: 'ข้อมูลลูกค้า', subtitle: 'สมาชิก กลุ่มอายุ และลูกค้าประจำ' },
   { id: 'lab2', label: 'Lab 2.2 · ซ่อมกราฟแย่', shortLabel: 'Lab', title: 'Lab 2.2 · ซ่อมกราฟแย่', subtitle: 'เทียบกราฟที่แย่กับกราฟที่แก้แล้ว' },
+  { id: 'segments', label: 'ลูกค้า & เมนู', shortLabel: 'RFM', title: 'ลูกค้า & เมนู', subtitle: 'กลุ่มลูกค้า RFM, การกลับมาซื้อ (cohort) และเมนูกลุ่ม A/B/C' },
+  { id: 'forecast', label: 'พยากรณ์ & ผิดปกติ', shortLabel: 'พยากรณ์', title: 'พยากรณ์ & ผิดปกติ', subtitle: 'พยากรณ์ยอดขายแบบดูวันในสัปดาห์ และวันที่ยอดผิดปกติ' },
   { id: 'live', label: 'สด · Firestore', shortLabel: 'สด', title: 'ยอดขายสด', subtitle: 'ข้อมูลจาก Firestore อัปเดตเองแบบ real-time และบันทึกยอดขายใหม่ได้' },
   { id: 'rules', label: 'ทดสอบ Rules', shortLabel: 'Rules', title: 'ทดสอบ Security Rules', subtitle: 'ลองโจมตีฐานข้อมูลของตัวเองเพื่อดูว่า rules กันได้จริง' },
 ]
@@ -19,6 +21,8 @@ export const TAB_ICONS = {
     </>
   ),
   lab2: <path d="M9 3h6M10 3v5.5L5.5 17a2 2 0 0 0 1.8 3h9.4a2 2 0 0 0 1.8-3L14 8.5V3" />,
+  segments: <path d="M12 3v9h9A9 9 0 1 1 12 3zM15 3.5A8.5 8.5 0 0 1 20.5 9H15z" />,
+  forecast: <path d="M3 17l5-5 4 4 8-9M15 7h5v5" />,
   live: <path d="M13 2 4 14h7l-1 8 9-12h-7z" />,
   rules: <path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6zM9 12l2 2 4-4" />,
 }
