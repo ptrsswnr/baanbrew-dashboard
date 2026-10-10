@@ -1,3 +1,5 @@
+import { addDays, daysBetween } from '../lab3/time'
+
 /** กรองแถวยอดขายตามสาขา (null = ทุกสาขา) และช่วงวันที่ (from/to ว่าง = ไม่จำกัด) */
 export function filterRows(rows, branch, dateRange) {
   return rows.filter((row) => {
@@ -24,19 +26,16 @@ export function getDateBounds(rows) {
   return { min: dates[0], max: dates[dates.length - 1] }
 }
 
-const toDateStr = (date) => date.toISOString().slice(0, 10)
-const oneDayMs = 24 * 60 * 60 * 1000
-
 /**
  * แถวของ "ช่วงก่อนหน้าที่ยาวเท่ากัน" ต่อจาก dateRange.from ย้อนกลับไป ใช้ทำ KPI delta
  * คืนค่า null ถ้ายังไม่ได้เลือกช่วงวันที่ครบทั้ง from และ to (ไม่มี "ช่วงก่อนหน้า" ที่นิยามได้ชัดเจน)
  */
 export function getPreviousPeriodRows(rows, branch, dateRange) {
   if (!dateRange.from || !dateRange.to) return null
-  const from = new Date(dateRange.from + 'T00:00:00')
-  const to = new Date(dateRange.to + 'T00:00:00')
-  const lengthMs = to - from
-  const prevTo = new Date(from.getTime() - oneDayMs)
-  const prevFrom = new Date(prevTo.getTime() - lengthMs)
-  return filterRows(rows, branch, { from: toDateStr(prevFrom), to: toDateStr(prevTo) })
+  // คำนวณเป็นสตริง YYYY-MM-DD ด้วย addDays/daysBetween (แบบ UTC) ไม่ใช้ toISOString กับวันที่ไทย
+  // เพราะเที่ยงคืนเวลาไทยแปลงเป็น UTC แล้วถอยไป 1 วัน
+  const lengthDays = daysBetween(dateRange.from, dateRange.to)
+  const prevTo = addDays(dateRange.from, -1)
+  const prevFrom = addDays(prevTo, -lengthDays)
+  return filterRows(rows, branch, { from: prevFrom, to: prevTo })
 }

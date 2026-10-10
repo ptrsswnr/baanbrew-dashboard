@@ -1,11 +1,10 @@
-const oneDayMs = 24 * 60 * 60 * 1000
-const toDateStr = (date) => date.toISOString().slice(0, 10)
+import { addDays } from '../lab3/time'
 
 function buildPresets(max) {
   if (!max) return []
-  const maxDate = new Date(max + 'T00:00:00')
-  const daysBack = (n) => toDateStr(new Date(maxDate.getTime() - (n - 1) * oneDayMs))
-  const yearStart = `${maxDate.getFullYear()}-01-01`
+  // ใช้ addDays (คำนวณแบบ UTC) แทน toISOString เพื่อไม่ให้วันที่ไทยเพี้ยนไป 1 วัน
+  const daysBack = (n) => addDays(max, -(n - 1))
+  const yearStart = `${max.slice(0, 4)}-01-01`
   return [
     { label: '7 วัน', range: { from: daysBack(7), to: max } },
     { label: '30 วัน', range: { from: daysBack(30), to: max } },

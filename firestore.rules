@@ -21,6 +21,13 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    // Lab 4.2C · ผลวิเคราะห์ (RFM, cohort, ABC, daily, meta) อ่านได้เมื่อล็อกอิน เขียนจากหน้าเว็บไม่ได้
+    // pipeline (npm run analytics) ใช้ firebase-admin จึงข้าม rules ได้
+    match /analytics/{docId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+
     match /sales/{saleId} {
       // รูปแบบเอกสารยอดขายใหม่ ต้องตรงกับที่ buildSale() สร้าง + created_at
       function validSale(d) {
