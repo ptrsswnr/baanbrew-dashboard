@@ -4,7 +4,7 @@ import { useState } from "react";
 // สีตามธีมใน src/index.css (@theme): ใช้ var() เพื่อให้เปลี่ยนที่เดียวแล้วตามทั้งหน้า
 export const INK = "var(--color-ink)";
 export const MUTED = "#a4a6b8"; // เทาอ่อน ใช้กับชุดข้อมูลรอง/เส้นอ้างอิง
-export const RAMP = ["#fde8f1", "#fbcde0", "#f6a3c6", "#ee6fa1", "#ec4d8c", "#b82a66"]; // ไล่สีชมพูเดียว อ่อน→เข้ม (brand-tint → brand)
+export const RAMP = [0, 1, 2, 3, 4, 5].map((i) => `var(--color-ramp-${i})`); // ไล่สีชมพูเดียว อ่อน→เข้ม (กลับด้านเองในธีมมืด)
 export const MAIN = "var(--color-brand)";
 export const pct = (x, d = 0) => (x * 100).toFixed(d) + "%";
 export const thaiDay = (iso) => new Date(iso + "T00:00:00").toLocaleDateString("th-TH", { day: "numeric", month: "short", year: "2-digit" });
@@ -54,14 +54,14 @@ export function AnalyticsShell({ source, state, title, children }) {
           {m && (
             <p className="mt-1 text-sm text-ink-muted">
               ข้อมูลถึง {thaiDay(m.asOf)} · {m.rows?.toLocaleString()} รายการ ·{" "}
-              {m.builtBy === "demo" ? <span className="rounded bg-amber-100 px-2 py-0.5 text-amber-800">โหมดสาธิต คำนวณในเบราว์เซอร์</span>
+              {m.builtBy === "demo" ? <span className="rounded bg-warning/15 px-2 py-0.5 text-warning">โหมดสาธิต คำนวณในเบราว์เซอร์</span>
                 : <>อัปเดต {m.builtAt ? new Date(m.builtAt).toLocaleString("th-TH", { dateStyle: "medium", timeStyle: "short" }) : "–"} โดย {m.builtBy === "github-actions" ? "GitHub Actions" : "เครื่องผู้สอน/ผู้เรียน"} · อ่าน {data.reads} เอกสาร</>}
             </p>
           )}
         </div>
         <UserChip user={user} onSignOut={() => source.signOut()} />
       </header>
-      {error && <p className="mb-4 rounded-lg bg-red-50 p-3 text-sm text-negative">{error}</p>}
+      {error && <p className="mb-4 rounded-lg bg-negative/10 p-3 text-sm text-negative">{error}</p>}
       {!data && !error && <p className="text-ink-muted">กำลังโหลดผลวิเคราะห์…</p>}
       {data && children(data)}
     </div>

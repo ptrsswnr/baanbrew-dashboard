@@ -19,6 +19,8 @@ import { isConfigured } from './lab3/firebase'
 import { parseSalesCsv, parseCustomersCsv, getBranchSales, prepareRows } from './lib/metrics'
 import { filterRows, filterCustomers, getDateBounds, getPreviousPeriodRows } from './lib/filters'
 import { branchToSlug, slugToBranch } from './lib/theme'
+import { useTheme } from './lib/useTheme'
+import ThemeToggle from './components/ThemeToggle'
 
 const parseProductsCsv = (text) => Papa.parse(text, { header: true, skipEmptyLines: true }).data
 
@@ -57,6 +59,7 @@ function App() {
   const [customers, setCustomers] = useState(null)
   const [products, setProducts] = useState(null)
   const [error, setError] = useState(null)
+  const { theme, toggle: toggleTheme } = useTheme()
 
   const initial = useMemo(parseHash, [])
   const [tab, setTab] = useState(initial.tab)
@@ -143,10 +146,13 @@ function App() {
               <h1 className="text-2xl leading-9 font-bold text-ink">{current.title}</h1>
               <p className="text-sm text-ink-muted">{current.subtitle}</p>
             </div>
-            <span className="flex items-center gap-2 rounded-full bg-bg-surface py-1.5 pr-4 pl-1.5 text-sm font-medium text-ink shadow-card">
-              <span className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-series-bangna text-sm font-bold text-white" aria-hidden="true">บ</span>
-              บ้านบรู
-            </span>
+            <div className="flex items-center gap-2">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              <span className="flex items-center gap-2 rounded-full bg-bg-surface py-1.5 pr-4 pl-1.5 text-sm font-medium text-ink shadow-card">
+                <span className="flex size-8 items-center justify-center rounded-full bg-gradient-to-br from-brand to-series-bangna text-sm font-bold text-white" aria-hidden="true">บ</span>
+                บ้านบรู
+              </span>
+            </div>
           </header>
 
           {tab !== 'lab2' && tab !== 'live' && tab !== 'rules' && tab !== 'overviewcsv' && !SOURCE_TABS.includes(tab) && (

@@ -1,9 +1,9 @@
 export function LoginCard({ onSignIn, error }) {
   return (
-    <div className="mx-auto max-w-md rounded-xl bg-white p-8 text-center ring-1 ring-border">
+    <div className="mx-auto max-w-md rounded-xl bg-bg-surface p-8 text-center ring-1 ring-border">
       <h2 className="text-xl font-semibold">ต้องเข้าสู่ระบบก่อน</h2>
       <p className="mt-2 text-ink-muted">ข้อมูลยอดขายสดเปิดให้เฉพาะพนักงานที่ล็อกอินแล้ว</p>
-      <button onClick={onSignIn} className="mt-5 rounded-lg bg-ink px-5 py-2.5 font-medium text-white hover:bg-ink/80">
+      <button onClick={onSignIn} className="mt-5 rounded-lg bg-ink px-5 py-2.5 font-medium text-on-ink hover:bg-ink/80">
         เข้าสู่ระบบด้วย Google
       </button>
       {error && <p className="mt-3 text-sm text-negative">{error}</p>}

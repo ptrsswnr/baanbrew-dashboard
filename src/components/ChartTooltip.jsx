@@ -3,9 +3,9 @@ function ChartTooltip({ active, payload, label, labelFormatter, valueFormatter }
   if (!active || !payload || payload.length === 0) return null
 
   return (
-    <div className="rounded-xl bg-white p-3 shadow-lg ring-1 ring-slate-200">
+    <div className="rounded-xl bg-bg-surface p-3 shadow-lg ring-1 ring-border">
       {label !== undefined && (
-        <p className="mb-1.5 text-xs font-medium text-slate-500">
+        <p className="mb-1.5 text-xs font-medium text-ink-muted">
           {labelFormatter ? labelFormatter(label) : label}
         </p>
       )}
@@ -13,8 +13,8 @@ function ChartTooltip({ active, payload, label, labelFormatter, valueFormatter }
         {payload.map((entry) => (
           <div key={entry.dataKey ?? entry.name} className="flex items-center gap-2 text-sm">
             <span className="size-2.5 shrink-0 rounded-full" style={{ background: entry.color }} />
-            <span className="text-slate-600">{entry.name}</span>
-            <span className="ml-auto font-semibold tabular-nums text-slate-800">
+            <span className="text-ink-muted">{entry.name}</span>
+            <span className="ml-auto font-semibold tabular-nums text-ink">
               {valueFormatter ? valueFormatter(entry.value, entry) : entry.value}
             </span>
           </div>

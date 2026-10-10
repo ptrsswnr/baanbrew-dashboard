@@ -21,6 +21,18 @@
   --color-series-ari: #22b573;
   --color-positive: #15803d;
   --color-negative: #b91c1c;
+  --color-warning: #b45309;
+  /* ตัวอักษรบนปุ่มสีทึบ bg-ink (ขาวบนปุ่มเข้ม / เข้มบนปุ่มสว่างในธีมมืด) */
+  --color-on-ink: #ffffff;
+  /* เส้นตารางของกราฟ */
+  --color-grid: #e8eaf3;
+  /* ไล่เฉดชมพู 6 ระดับ (อ่อน→เข้ม) ใช้กับ heatmap และกราฟ ABC */
+  --color-ramp-0: #fde8f1;
+  --color-ramp-1: #fbcde0;
+  --color-ramp-2: #f6a3c6;
+  --color-ramp-3: #ee6fa1;
+  --color-ramp-4: #ec4d8c;
+  --color-ramp-5: #b82a66;
 
   --radius-lg: 1rem;
   --radius-md: 0.75rem;
@@ -28,9 +40,54 @@
   --shadow-card: 0 1px 2px rgb(35 35 58 / 0.04), 0 8px 24px rgb(35 35 58 / 0.06);
 }
 
+/* ธีมมืด: เปิดด้วย <html data-theme="dark"> (ดู src/lib/useTheme.js) ทับค่า token เดิม ทุกหน้าเปลี่ยนตามเอง */
+:root[data-theme="dark"] {
+  color-scheme: dark; /* ให้ช่องวันที่ scrollbar และฟอร์มของเบราว์เซอร์เป็นสีมืดด้วย */
+  --color-bg-page: #14141c;
+  --color-bg-surface: #1f2030;
+  --color-border: #33354d;
+  --color-ink: #ececf4;
+  --color-ink-muted: #a6aac4;
+  --color-brand-strong: #f0629a;
+  --color-brand-tint: #3b2234;
+  --color-side: #0e0e13;
+  --color-positive: #4ade80;
+  --color-negative: #f87171;
+  --color-warning: #fbbf24;
+  --color-on-ink: #14141c;
+  --color-grid: #33354d;
+  /* heatmap กลับด้าน: ค่าน้อย = มืด ค่ามาก = ชมพูสด เพื่อให้ตัวอักษรอ่านได้ทั้งสองธีม */
+  --color-ramp-0: #2b1c28;
+  --color-ramp-1: #4a2339;
+  --color-ramp-2: #7a2c55;
+  --color-ramp-3: #b03a70;
+  --color-ramp-4: #ec4d8c;
+  --color-ramp-5: #f58bb6;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.35), 0 8px 24px rgb(0 0 0 / 0.35);
+}
+
 body {
   background-color: var(--color-bg-page);
+  color: var(--color-ink);
   line-height: 1.5;
+}
+
+/* Recharts ใส่สีตายตัวเอง (แกน #666, tooltip พื้นขาว) จึงต้องทับให้ตามธีม */
+.recharts-cartesian-axis-tick-value,
+.recharts-polar-angle-axis-tick-value,
+.recharts-label {
+  fill: var(--color-ink-muted);
+}
+.recharts-legend-item-text {
+  color: var(--color-ink) !important;
+}
+.recharts-default-tooltip {
+  background-color: var(--color-bg-surface) !important;
+  border-color: var(--color-border) !important;
+}
+.recharts-tooltip-label,
+.recharts-tooltip-item {
+  color: var(--color-ink) !important;
 }
 
 .tabular-nums {

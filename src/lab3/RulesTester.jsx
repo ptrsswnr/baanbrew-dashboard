@@ -68,35 +68,35 @@ export default function RulesTester() {
   return (
     <div className="max-w-3xl">
       <h1 className="text-3xl font-bold">Lab 3.3 · ทดสอบ Security Rules</h1>
-      <p className="mt-2 text-stone-600">
+      <p className="mt-2 text-ink-muted">
         กดปุ่มเพื่อลองโจมตีฐานข้อมูลของตัวเอง ทุกข้อควรได้ ✅ ถูกบล็อก
         ทำ 2 รอบ: <b>ก่อน</b> deploy rules (โหมดทดสอบ จะเห็น ❌ เกือบทั้งหมด) และ <b>หลัง</b> deploy
       </p>
-      <p className="mt-2 text-sm text-stone-500">
+      <p className="mt-2 text-sm text-ink-muted">
         {user ? `ทดสอบในฐานะ ${user.displayName ?? user.email} · ออกจากระบบแล้วกลับมาหน้านี้เพื่อทดสอบกรณีไม่ล็อกอิน`
               : "ทดสอบในฐานะผู้ที่ยังไม่ล็อกอิน · ล็อกอินที่แท็บ \"สด\" แล้วกลับมาเพื่อทดสอบชุดที่เหลือ"}
       </p>
       <button onClick={runAll} disabled={running || user === undefined}
-              className="mt-4 rounded-lg bg-stone-900 px-5 py-2.5 font-medium text-white disabled:opacity-60">
+              className="mt-4 rounded-lg bg-ink px-5 py-2.5 font-medium text-on-ink disabled:opacity-60">
         {running ? "กำลังทดสอบ…" : `เริ่มทดสอบ ${tests.length} ข้อ`}
       </button>
 
-      <table className="mt-5 w-full rounded-xl bg-white text-sm ring-1 ring-stone-200">
-        <thead className="text-left text-stone-500">
+      <table className="mt-5 w-full rounded-xl bg-bg-surface text-sm ring-1 ring-border">
+        <thead className="text-left text-ink-muted">
           <tr><th className="p-3 font-medium">การโจมตี</th><th className="p-3 font-medium">rules ที่ควรกันไว้</th><th className="p-3 font-medium">ผล</th></tr>
         </thead>
         <tbody>
           {tests.map((t) => {
             const r = results[t.name];
             return (
-              <tr key={t.name} className="border-t border-stone-100 align-top">
+              <tr key={t.name} className="border-t border-border align-top">
                 <td className="p-3">{t.name}</td>
-                <td className="p-3 text-stone-500">{t.why}</td>
+                <td className="p-3 text-ink-muted">{t.why}</td>
                 <td className="p-3 whitespace-nowrap">
-                  {!r ? "–" : r.blocked === true ? <span className="text-emerald-700">✅ ถูกบล็อก</span>
-                    : r.blocked === false ? <span className="font-medium text-red-700">❌ ผ่านได้ อันตราย!</span>
-                    : <span className="text-amber-700">⚠️ {r.detail}</span>}
-                  {r && r.blocked === false && <div className="text-xs text-stone-400">{r.detail}</div>}
+                  {!r ? "–" : r.blocked === true ? <span className="text-positive">✅ ถูกบล็อก</span>
+                    : r.blocked === false ? <span className="font-medium text-negative">❌ ผ่านได้ อันตราย!</span>
+                    : <span className="text-warning">⚠️ {r.detail}</span>}
+                  {r && r.blocked === false && <div className="text-xs text-ink-muted/60">{r.detail}</div>}
                 </td>
               </tr>
             );
@@ -104,11 +104,11 @@ export default function RulesTester() {
         </tbody>
       </table>
       {done && (
-        <p className={`mt-4 font-medium ${passed === tests.length ? "text-emerald-700" : "text-red-700"}`}>
+        <p className={`mt-4 font-medium ${passed === tests.length ? "text-positive" : "text-negative"}`}>
           {passed === tests.length ? `🎉 บล็อกได้ครบ ${passed}/${tests.length} ข้อ` : `บล็อกได้ ${passed}/${tests.length} ข้อ ตรวจ firestore.rules แล้ว deploy ใหม่`}
         </p>
       )}
-      <p className="mt-4 text-xs text-stone-500">
+      <p className="mt-4 text-xs text-ink-muted">
         ถ้ารอบแรก (โหมดทดสอบ) มีเอกสารหลุดเข้าไป จะมี order_id = RULES-TEST และวันที่ 1 ม.ค. 2000 ลบได้ใน Firebase console
       </p>
     </div>

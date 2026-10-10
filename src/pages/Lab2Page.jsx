@@ -63,7 +63,7 @@ function Lab2Page({ rows, products }) {
         return (
           <section key={c.n} className="rounded-lg bg-bg-surface p-5 shadow-card">
             <div className="flex flex-wrap items-baseline gap-x-3">
-              <span className="rounded-full bg-ink px-3 py-0.5 text-sm font-semibold text-white">กราฟ {c.n}</span>
+              <span className="rounded-full bg-ink px-3 py-0.5 text-sm font-semibold text-on-ink">กราฟ {c.n}</span>
               <h3 className="text-lg font-semibold text-ink">{c.title}</h3>
             </div>
             <p className="mt-2 font-medium text-ink">{c.ask}</p>
@@ -74,13 +74,13 @@ function Lab2Page({ rows, products }) {
             </ul>
             <div className="mt-4 grid gap-4 xl:grid-cols-2">
               <div>
-                <div className="mb-1 text-sm font-semibold text-red-700">ก่อนซ่อม</div>
+                <div className="mb-1 text-sm font-semibold text-negative">ก่อนซ่อม</div>
                 <div className="h-80 overflow-hidden rounded-lg bg-bg-page p-2">
                   <BadChart rows={rows} products={products} />
                 </div>
               </div>
               <div>
-                <div className="mb-1 text-sm font-semibold text-emerald-700">หลังซ่อม</div>
+                <div className="mb-1 text-sm font-semibold text-positive">หลังซ่อม</div>
                 <div className="h-80 overflow-hidden rounded-lg bg-bg-page p-2">
                   {FixedChart ? <FixedChart rows={rows} products={products} /> : <Placeholder n={c.n} />}
                 </div>
