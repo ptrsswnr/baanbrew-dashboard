@@ -45,7 +45,7 @@ export default function Overview({ rows }) {
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={daily} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
-                <CartesianGrid stroke="#e8eaf3" vertical={false} />
+                <CartesianGrid stroke="var(--color-grid)" vertical={false} />
                 <XAxis dataKey="date" tickFormatter={thaiDate} minTickGap={40} tick={{ fontSize: 12 }} />
                 <YAxis tickFormatter={fmtShortBaht} width={60} tick={{ fontSize: 12 }} />
                 <Tooltip
@@ -65,7 +65,7 @@ export default function Overview({ rows }) {
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={branches} layout="vertical" margin={{ top: 5, right: 80, left: 10, bottom: 5 }}>
-                <CartesianGrid stroke="#e8eaf3" horizontal={false} />
+                <CartesianGrid stroke="var(--color-grid)" horizontal={false} />
                 <XAxis type="number" tickFormatter={fmtShortBaht} tick={{ fontSize: 12 }} />
                 <YAxis type="category" dataKey="branch" width={90} tick={{ fontSize: 14 }} />
                 <Tooltip formatter={(v) => [fmtBaht(v), "ยอดขาย"]} />

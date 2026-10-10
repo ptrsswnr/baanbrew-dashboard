@@ -61,7 +61,7 @@ function ForecastCard({ daily }) {
           right={<div className="flex flex-wrap gap-1">
             {[null, ...BRANCHES].map((b) => (
               <button key={b ?? "all"} onClick={() => setBranch(b)}
-                      className={`rounded-lg px-2.5 py-1 text-sm ${branch === b ? "bg-ink text-white" : "text-ink-muted ring-1 ring-border"}`}>{b ?? "รวม"}</button>
+                      className={`rounded-lg px-2.5 py-1 text-sm ${branch === b ? "bg-ink text-on-ink" : "text-ink-muted ring-1 ring-border"}`}>{b ?? "รวม"}</button>
             ))}
           </div>}>
       {result.error ? <Pending lab="Lab 4.4" error={result.error} /> : (
@@ -91,7 +91,7 @@ function ForecastCard({ daily }) {
             <div className="mt-3 h-72">
               <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={r.weekChart} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
-                  <CartesianGrid vertical={false} stroke="#e8eaf3" />
+                  <CartesianGrid vertical={false} stroke="var(--color-grid)" />
                   <XAxis dataKey="week" tickFormatter={shortDay} minTickGap={24} tick={{ fontSize: 12 }} />
                   <YAxis tickFormatter={fmtShortBaht} width={56} domain={[0, "auto"]} tick={{ fontSize: 12 }} />
                   <Tooltip labelFormatter={(w) => `สัปดาห์ ${thaiDay(w)} – ${thaiDay(addDays(w, 6))}`} formatter={(v, n) => [fmtBaht(v), n]} />
@@ -105,7 +105,7 @@ function ForecastCard({ daily }) {
           <div className="mt-4 h-72">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={r.chart} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#e8eaf3" />
+                <CartesianGrid vertical={false} stroke="var(--color-grid)" />
                 <XAxis dataKey="date" tickFormatter={shortDay} minTickGap={36} tick={{ fontSize: 12 }} />
                 <YAxis tickFormatter={fmtShortBaht} width={56} domain={[0, "auto"]} tick={{ fontSize: 12 }} />
                 <Tooltip labelFormatter={thaiDay} formatter={(v, n) => [Array.isArray(v) ? `${fmtBaht(v[0])} – ${fmtBaht(v[1])}` : fmtBaht(v), n]} />
@@ -174,14 +174,14 @@ function AnomalyCard({ daily, holidays }) {
           <div className="mt-2 h-64">
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={focusData} margin={{ top: 8, right: 12, left: 4, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#e8eaf3" />
+                <CartesianGrid vertical={false} stroke="var(--color-grid)" />
                 <XAxis dataKey="date" tickFormatter={shortDay} minTickGap={32} tick={{ fontSize: 12 }} />
                 <YAxis tickFormatter={fmtShortBaht} width={56} domain={[0, "auto"]} tick={{ fontSize: 12 }} />
                 <Tooltip labelFormatter={thaiDay} formatter={(v, n) => [fmtBaht(v), n]} />
                 <Legend wrapperStyle={{ fontSize: 13 }} />
                 <Line name="ยอดจริง" dataKey="actual" stroke={INK} strokeWidth={2} dot={false} isAnimationActive={false} />
                 <Line name="ค่าปกติ" dataKey="expected" stroke={MUTED} strokeWidth={2} strokeDasharray="6 4" dot={false} connectNulls isAnimationActive={false} />
-                <ReferenceDot x={focus.date} y={focus.actual} r={6} stroke="#fff" strokeWidth={2}
+                <ReferenceDot x={focus.date} y={focus.actual} r={6} stroke="var(--color-bg-surface)" strokeWidth={2}
                               fill={focus.change < 0 ? "var(--color-negative)" : "#e8590c"} />
               </ComposedChart>
             </ResponsiveContainer>
@@ -208,7 +208,7 @@ function AnomalyCard({ daily, holidays }) {
                   <td className="pl-4">
                     {a.change < 0
                       ? <span className="font-medium text-negative">▼ ต่ำกว่าปกติ {Math.round(-a.change * 100)}%</span>
-                      : <span className="font-medium text-amber-700">▲ สูงกว่าปกติ {Math.round(a.change * 100)}%</span>}
+                      : <span className="font-medium text-warning">▲ สูงกว่าปกติ {Math.round(a.change * 100)}%</span>}
                   </td>
                 </tr>
               );
@@ -231,7 +231,7 @@ export default function ForecastTab({ source }) {
       {(d) => d.daily.error ? <Pending lab="pipeline" error={d.daily.error} /> : (
         <div className="space-y-6">
           {d.meta.alerts?.length > 0 && (
-            <p className="rounded-lg bg-red-50 p-3 text-sm text-negative">
+            <p className="rounded-lg bg-negative/10 p-3 text-sm text-negative">
               🚨 ยอดวันล่าสุดผิดปกติ: {d.meta.alerts.map((a) => `${a.branch} ${fmtBaht(a.actual)} (ปกติ ${fmtBaht(a.expected)})`).join(", ")}
             </p>
           )}

@@ -22,10 +22,10 @@ function RfmCard({ rfm, onPick, picked }) {
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} layout="vertical" margin={{ left: 8, right: 48 }} barGap={2}>
-            <CartesianGrid horizontal={false} stroke="#e8eaf3" />
+            <CartesianGrid horizontal={false} stroke="var(--color-grid)" />
             <XAxis type="number" tickFormatter={(v) => pct(v)} domain={[0, 0.45]} tick={{ fontSize: 12 }} />
             <YAxis type="category" dataKey="label" width={96} tick={{ fontSize: 13 }} />
-            <Tooltip formatter={(v, n) => [pct(v, 1), n]} cursor={{ fill: "#f1f2f8" }} />
+            <Tooltip formatter={(v, n) => [pct(v, 1), n]} cursor={{ fill: "var(--color-bg-page)" }} />
             <Legend wrapperStyle={{ fontSize: 13 }} />
             <Bar name="% ลูกค้า" dataKey="customerShare" fill={MUTED} radius={[0, 4, 4, 0]} isAnimationActive={false}
                  onClick={(d) => onPick?.(d.payload?.segment ?? d.segment)} style={{ cursor: "pointer" }} />
@@ -90,7 +90,7 @@ function CustomerListCard({ rfm, picked, onClose }) {
       right={
         <div className="flex gap-2">
           <button onClick={() => downloadCsv(picked, list)}
-                  className="rounded-lg bg-ink px-3 py-1.5 text-sm font-medium text-white hover:bg-ink/80">
+                  className="rounded-lg bg-ink px-3 py-1.5 text-sm font-medium text-on-ink hover:bg-ink/80">
             ดาวน์โหลด CSV ({list.length.toLocaleString()} แถว)
           </button>
           <button onClick={onClose} className="rounded-lg px-3 py-1.5 text-sm text-ink-muted ring-1 ring-border hover:bg-bg-page">ปิด</button>
@@ -169,7 +169,7 @@ function Row({ c, MAXK, shade, partial }) {
           <div key={k} title={`${thaiMonth(c.cohort)} เดือนที่ ${k}: ${pct(v, 1)}${isPartial ? " (เดือนไม่ครบ)" : ""}`}
                className="flex h-7 items-center justify-center rounded-[3px]"
                style={{
-                 background: isPartial ? `repeating-linear-gradient(45deg, ${shade(v)}, ${shade(v)} 4px, #fff 4px, #fff 6px)` : shade(v),
+                 background: isPartial ? `repeating-linear-gradient(45deg, ${shade(v)}, ${shade(v)} 4px, var(--color-bg-surface) 4px, var(--color-bg-surface) 6px)` : shade(v),
                  color: v >= 0.5 ? "#fff" : INK,
                }}>
             {k === 0 ? "" : Math.round(v * 100)}
@@ -186,13 +186,13 @@ function AbcCard({ abc }) {
   const items = abc.items;
   const nA = items.filter((i) => i.cls === "A").length;
   const C = items.filter((i) => i.cls === "C");
-  const fill = { A: MAIN, B: RAMP[2], C: "#d9dbe8" };
+  const fill = { A: MAIN, B: RAMP[2], C: "var(--color-border)" };
   return (
     <Card title="Pareto · ABC ของเมนู" sub="แท่ง = สัดส่วนยอดขายแต่ละเมนู · เส้น = ยอดสะสม · แกนเดียวกันเป็น %">
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={items} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-            <CartesianGrid vertical={false} stroke="#e8eaf3" />
+            <CartesianGrid vertical={false} stroke="var(--color-grid)" />
             <XAxis dataKey="rank" tick={{ fontSize: 11 }} interval={4} label={{ value: "อันดับเมนู", position: "insideBottomRight", offset: -2, fontSize: 12 }} />
             <YAxis tickFormatter={(v) => pct(v)} domain={[0, 1]} width={44} tick={{ fontSize: 12 }} />
             <Tooltip labelFormatter={(r) => { const it = items[r - 1]; return `#${r} ${it.name} · กลุ่ม ${it.cls}`; }}
